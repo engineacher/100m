@@ -310,7 +310,7 @@ jQuery.sheet = {
 				jQuery(jQuery.sheet.instance).each( function() {
 					this.nav = false;
 				});
-				jS.nav = true;
+				jS.nav = nav;
 			},
 			controlFactory: { /* controlFactory creates the different objects requied by sheet */
 				addRowMulti: function(qty, isBefore, skipFormulaReparse) { /* creates multi rows
@@ -629,7 +629,7 @@ jQuery.sheet = {
 				
 				
 				header: function() { /* creates the control/container for everything above the spreadsheet */
-					console.log("Call header");
+//	console.log("Call header");
 					jS.obj.controls().remove();
 					jS.obj.tabContainer().remove();
 
@@ -655,7 +655,7 @@ jQuery.sheet = {
 						'<table cellpadding="0" cellspacing="0" border="0px">' +
 							'<tr>' +
 								'<td class="' + jS.cl.formulaParent + '">' +
-									'<textarea id="' + jS.id.formula + '" class="' + jS.cl.formula + '"></textarea>' +
+									'<textarea  maxlength="2" id="' + jS.id.formula + '" class="' + jS.cl.formula + '"></textarea>' +
 								'</td>' +
 							'</tr>' +							
 						'</table>')
@@ -664,7 +664,7 @@ jQuery.sheet = {
 						.find('textarea')
 						.keyup( function() {
 							jS.obj.inPlaceEdit().val(jS.obj.formula().val());
-				console.log("Call header keyup");
+//	console.log("Call header keyup");
 						})
 						.change( function() {
 							jS.obj.inPlaceEdit().val(jS.obj.formula().val());
@@ -800,13 +800,15 @@ jQuery.sheet = {
 				inPlaceEdit: function(td) { /* creates a teaxtarea for a user to put a value in that floats on top of the current selected cell
 					 td: object, the cell to be edited
 					 */
+
 					jS.setNav(false);
-	console.log("Call inPlaceEdit");
-	console.log("inPlaceEdit().val(): "+jS.obj.inPlaceEdit().val());
+//	console.log("setNav: "+jS.Nav);
+//	console.log("Call inPlaceEdit");
+//	console.log("inPlaceEdit().val(): "+jS.obj.inPlaceEdit().val());
 					
 					var v = jS.obj.inPlaceEdit().val();
-	console.log("v: "+v);
-	console.dir("textarea: "+textarea);			
+//	console.log("v: "+v);
+//	console.dir("textarea: "+textarea);			
 		
 					jS.obj.inPlaceEdit().remove();
 					var formula = jS.obj.formula();
@@ -814,24 +816,15 @@ jQuery.sheet = {
 					var style = td.attr('style');
 					var w = td.width();
 					var h = td.height();
-					var textarea = jQuery('<input maxlength="2" id="' + jS.id.inPlaceEdit + '" class="' + jS.cl.inPlaceEdit + ' ' + jS.cl.uiInPlaceEdit + '"   WRAP="hard"/>')
+					var textarea = jQuery('<input  maxlength="2" id="' + jS.id.inPlaceEdit + '" class="' + jS.cl.inPlaceEdit + ' ' + jS.cl.uiInPlaceEdit + '"   WRAP="hard"/>')
 					//var textarea = jQuery('<textarea id="' + jS.id.inPlaceEdit + '" class="' + jS.cl.inPlaceEdit + ' ' + jS.cl.uiInPlaceEdit + '"   WRAP="hard"/>')
-					//.css('left', offset.left)
-					//.css('top', offset.top)
-					//.width(w)
-					//.height(h)
-					//.keydown(jS.evt.inPlaceEditOnKeyDown)
+					.css('left', offset.left)
+					.css('top', offset.top)
+					.width(w)
+					.height(h)
+					.keydown(jS.evt.inPlaceEditOnKeyDown)
 					.keyup( function() {
-						
-	console.log("b_textarea.val(): "+textarea.val());
-	console.log("b_inPlaceEdit().val(): "+jS.obj.inPlaceEdit().val());
-	console.log("b_formula.val(): "+formula.val());	
-						//textarea.val();
-						//formula.val(textarea.val());
 						formula.val(textarea.val());
-	console.log("a_textarea.val(): "+textarea.val());
-	console.log("a_inPlaceEdit().val(): "+jS.obj.inPlaceEdit().val());
-	console.log("a_formula.val(): "+formula.val());	
 					})
 					.change( function() {
 						formula.val(textarea.val());
@@ -849,10 +842,10 @@ jQuery.sheet = {
 					.val(formula.val()) //F2 click
 					.focus()
 					.select();
-	console.dir("textarea: "+textarea);
-	console.log("l_textarea.val(): "+textarea.val());
-	console.log("l_inPlaceEdit().val(): "+jS.obj.inPlaceEdit().val());
-		
+//	console.log("l_textarea.val(): "+textarea.val());
+//	console.log("l_inPlaceEdit().val(): "+jS.obj.inPlaceEdit().val());
+//	console.log("l_formula.val(): "+formula.val());	
+	
 					//Make the textarrea resizable automatically
 					if (jQuery.fn.elastic) {
 						textarea.elastic();
@@ -928,10 +921,10 @@ jQuery.sheet = {
 								case key.ALT:
 									break;					
 								default:
-		console.log("documentKeydown e.keyCode: "+e.keyCode);
+//		console.log("documentKeydown e.keyCode: "+e.keyCode);
 		
 									jS.obj.cellActive().dblclick();
-		console.log("return true;");
+//		console.log("return true;");
 									return true;
 							}
 							return false;
@@ -940,8 +933,8 @@ jQuery.sheet = {
 				},
 
 				inPlaceEditOnKeyDown: function(e) {
-	console.log("inPlaceEditOnKeyDown: "+e.keyCode);
-	console.log("jS.obj.formula().val():" +jS.obj.formula().val());
+//	console.log("inPlaceEditOnKeyDown: "+e.keyCode);
+//	console.log("jS.obj.formula().val():" +jS.obj.formula().val());
 					switch (e.keyCode) {
 						case key.ENTER:
 							return jS.evt.keyDownHandler.enter(e);
@@ -975,7 +968,7 @@ jQuery.sheet = {
 					 */
 					switch (jS.cellLast.isEdit || forceCalc) {
 						case true:
-							console.log("Call cellEditDone");
+//	console.log("Call cellEditDone");
 							jS.obj.inPlaceEdit().remove();
 							var formula = jS.obj.formula();
 							//formula.unbind('keydown'); //remove any lingering events from inPlaceEdit
@@ -1068,7 +1061,7 @@ jQuery.sheet = {
 					 top: int, pixels top;
 					 skipOffset: bool, skips offset;
 					 */
-					console.log("Call cellSetFocusFromXY");
+//	console.log("Call cellSetFocusFromXY");
 					var td = jS.getTdFromXY(left, top, skipOffset);
 
 					if (jS.isTd(td)) {
@@ -1120,7 +1113,7 @@ jQuery.sheet = {
 					return false;
 				},
 				cellSetFocusFromKeyCode: function(e) { /* invoke a click on next/prev cell */
-console.log("cellSetFocusFromKeyCode "+e.keyCode);
+//	console.log("cellSetFocusFromKeyCode "+e.keyCode);
 					var c = jS.cellLast.col; //we don't set the cellLast.col here so that we never go into indexes that don't exist
 					var r = jS.cellLast.row;
 					var overrideIsEdit = false;
@@ -1244,7 +1237,7 @@ console.log("cellSetFocusFromKeyCode "+e.keyCode);
 					jS.cellEdit(jQuery(e.target), true);
 				},
 				cellOnDblClick: function(e) {
-		console.log("Call cellOnDblClick");
+//		console.log("Call cellOnDblClick");
 		
 					jS.cellLast.isEdit = jS.isSheetEdit = true;
 					jS.controlFactory.inPlaceEdit(jS.cellLast.td);
@@ -1695,7 +1688,7 @@ console.log("cellSetFocusFromKeyCode "+e.keyCode);
 				//This finished up the edit of the last cell
 				jS.evt.cellEditDone();
 
-				console.log("Call cellEdit");
+//	console.log("Call cellEdit");
 				//jS.obj.formula().val(jS.colLast + jS.rowLast);
 								
 				jS.followMe(td);
@@ -1769,7 +1762,7 @@ console.log("cellSetFocusFromKeyCode "+e.keyCode);
 			callStack: 0,
 			updateCellValue: function(sheet, row, col) {
 				//first detect if the cell exists if not return nothing
-				console.log("Call updateCellValue");
+//	console.log("Call updateCellValue");
 				if (!jS.spreadsheets[sheet])
 					return 'Error: Sheet not found';
 				if (!jS.spreadsheets[sheet][row])
@@ -2151,7 +2144,7 @@ console.log("cellSetFocusFromKeyCode "+e.keyCode);
 				jS.highlightedLast.colEnd = last.col;
 			},
 			sheetClearActive: function() { /* clears formula and bars from being highlighted */
-				console.log("Call sheetClearActive!")
+//	console.log("Call sheetClearActive!")
 				jS.obj.formula().val('');
 				jS.obj.barSelected().removeClass(jS.cl.barSelected);
 			},
@@ -2409,6 +2402,7 @@ var jSE = jQuery.sheet.engine = { //Calculations Engine
 		}
 		
 		return (num >= 0 ? num : 0);
+		//reutrn "?";
 	},
 	columnLabelString: function(index) {//0 = A, 1 = B
 		var b = (index).toString(26).toUpperCase();   // Radix is 26.

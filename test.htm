@@ -1,0 +1,44 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="ja">
+	<head>
+		<title>100m</title>
+		<!--Required-->
+		<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+		<link rel="stylesheet" type="text/css" href="jquery.sheet.css" >
+		<link rel="stylesheet" type="text/css" href="jquery-ui/theme/jquery-ui.css" >
+		
+		<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+		<link rel="icon" href="favicon.ico" type="image/vnd.microsoft.icon">
+		
+		
+		<script type="text/javascript" src="jquery-1.5.2.js"></script>
+		<script type="text/javascript" src="jquery.sheet.js"></script>
+		<script type="text/javascript" src="parser.js"></script>
+		<script type="text/javascript" src="jquery.blockUI.js"></script>
+
+		<!--/Optional-->
+		<script type="text/javascript">
+
+		$( function() {
+			jQuery.blockUI({message: $('#loginForm') });
+			<!--$("#okbutton").click(function(){ -->
+				$.unblockUI();
+				$('#YourName').append($('#InputName').val());
+				$('#jQuerySheet0').sheet({});
+		    <!--});-->
+		});
+
+		
+		</script>
+		<!--Page styles-->
+	</head>
+	<body>
+		<div id="YourName"></div>
+		<div id="jQuerySheet0" class="jQuerySheet"></div>
+		<div id="debug" class="debug"></div>
+		<div id="loginForm" style="display:none">
+        	<p><label>名前を入れてください:</label><input id="InputName" type="text" name="demo1" /></p>
+        	<p><button type="submit" id="okbutton" name="demo1">OK</button></p>
+        </div>
+	</body>
+</html>

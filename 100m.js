@@ -47,9 +47,7 @@ jQuery.fn.extend({
 				},					//fn, called when a spreadsheet is scrolled
 				boxModelCorrection: 2, 								//int, attempts to correct the differences found in heights and widths of different browsers, if you mess with this, get ready for the must upsetting and delacate js ever
 				calculations: {},								//object, used to extend the standard functions that come with sheet
-				cellSelectModel: 	'excel',						//string, 'excel' || 'oo' || 'gdocs' Excel sets the first cell onmousedown active, openoffice sets the last, now you can choose how you want it to be ;)
 				resizable: 			false,							//bool, makes the $(obj).sheet(); object resizeable, also adds a resizable formula textarea at top of sheet
-				autoFiller: 		false,							//bool, the little guy that hangs out to the bottom right of a selected cell, users can click and drag the value to other cells
 				minSize: {
 					rows: 10,
 					cols: 10
@@ -230,8 +228,6 @@ jQuery.sheet = {
 				/*
 				 cl = class references
 				 */
-				autoFillerHandle:		'jSheetAutoFillerHandle',
-				autoFillerConver:		'jSheetAutoFillerCover',
 				barCorner:				'jSheetBarCorner',
 				barCornerParent:		'jSheetBarCornerParent',
 				barHelper:				'jSheetBarHelper',
@@ -262,7 +258,7 @@ jQuery.sheet = {
 				tableControl:			'tableControl',
 				title:					'jSheetTitle',
 				ui:						'jSheetUI',
-				uiAutoFiller:			'ui-state-active',
+
 				uiActive:				'ui-state-active',
 				uiBar: 					'ui-widget-header',
 				uiBarHighlight: 		'ui-state-highlight',
@@ -853,7 +849,7 @@ jQuery.sheet = {
 					}
 				},
 			},
-			autoFillerNotGroup: true,
+
 			evt: { /* event handlers for sheet; e = event */
 				
 				keyDownHandler: {
@@ -1685,7 +1681,6 @@ jQuery.sheet = {
 
 				 isDrag: bool, should be determained by if the user is dragging their mouse around setting cells;
 				 */
-				jS.autoFillerNotGroup = true; //make autoFiller directional again.
 				//This finished up the edit of the last cell
 				jS.evt.cellEditDone();
 
@@ -1739,10 +1734,6 @@ jQuery.sheet = {
 					jS.highlightedLast.colStart = loc.col;
 					jS.highlightedLast.rowLast = loc.row;
 					jS.highlightedLast.colLast = loc.col;
-
-					switch (s.cellSelectModel) {
-						case 'excel':
-					}
 				}
 			},
 			colLast: 0, /* the most recent used column */
@@ -1840,15 +1831,7 @@ jQuery.sheet = {
 				fixedCellRangeValue: function(ids) {
 					return jS.cellIdHandlers.cellRangeValue.apply(this, [(ids + '').replace(/[$]/g, '')]);
 				},
-				remoteCellValue: function(id) {//Example: SHEET1:A1
-					var sheet, loc;
-					id = id.replace(jSE.regEx.remoteCell, function(ignored1, ignored2, I, col, row) {
-						sheet = (I * 1) - 1;
-						loc = jSE.parseLocation(col + row);
-						return ignored1;
-					});
-					return jS.updateCellValue(sheet, loc.row, loc.col);
-				},
+
 				remoteCellRangeValue: function(ids) {//Example: SHEET1:A1:B2
 					var sheet, start, end;
 					ids = ids.replace(jSE.regEx.remoteCellRange, function(ignored1, ignored2, I, startCol, startRow, endCol, endRow) {
@@ -1960,17 +1943,8 @@ jQuery.sheet = {
 					});
 				}
 
-				jS.autoFillerGoToTd(td, tdHeight, tdWidth);
 			},
-			autoFillerGoToTd: function(td, tdHeight, tdWidth) { /* moves autoFiller to a selected cell
-				 td: object, td object;
-				 tdHeight: height of a td object;
-				 tdWidth: width of a td object;
-				 */
-				td = (td ? td : jQuery(jS.cellLast.td));
-				tdHeight = (tdHeight ? tdHeight : td.height());
-				tdWidth = (tdWidth ? tdWidth : td.width());
-			},
+
 			isRowHeightSync: [],
 			setActiveSheet: function(i) { /* sets active a spreadsheet inside of a sheet instance
 				 i: int, a sheet integer desired to show;
@@ -2093,12 +2067,7 @@ jQuery.sheet = {
 				var last = (start < end ? end : start);
 
 				var setActive = function(td, rowStart, colStart, rowFollow, colFollow) {
-					switch (s.cellSelectModel) {
-						default:
-							//stay at initial cell
-							jS.cellEdit(jQuery(jS.getTd(jS.i, rowStart, colStart)));
-							break;
-					}
+				jS.cellEdit(jQuery(jS.getTd(jS.i, rowStart, colStart)));
 
 					setActive = function(td) { //save resources
 						return td;

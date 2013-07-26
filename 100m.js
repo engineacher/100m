@@ -404,8 +404,8 @@ jQuery.sheet = {
 								newCol: '',
 //Here!
 								reLabel: function() {
-									$.get("/CGI-Executables/CGI.pl?pref=row",function(data){
-										$("#debug").text(data);
+									$.get("/cgi-bin/CGI.pl?pref=row",function(data){
+//										$("#debug").text(data);
 										var rowNum = data.split(",");
 										o.barParent.children().each( function(i) {
 											jQuery(this).text(rowNum[i]);
@@ -453,7 +453,7 @@ jQuery.sheet = {
 									return '<td />';
 								},
 								reLabel: function() {
-									$.get("/CGI-Executables/CGI.pl?pref=col",function(data){
+									$.get("/cgi-bin/CGI.pl?pref=col",function(data){
 //										$("#debug").text(data);
 										var rowNum = data.split(",");
 										o.barParent.children().each( function(i) {

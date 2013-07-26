@@ -2252,16 +2252,7 @@ jQuery.sheet = {
 		var emptyFN = function() {
 		};
 		//ready the sheet's parser
-		jS.lexer = function() {
-		};
-		jS.lexer.prototype = parser.lexer;
-		jS.parser = function() {
-			this.lexer = new jS.lexer();
-			this.yy = {};
-		};
-		jS.parser.prototype = parser;
 
-		jS.Parser = new jS.parser;
 
 		//We need to take the sheet out of the parent in order to get an accurate reading of it's height and width
 		//jQuery(this).html(s.loading);

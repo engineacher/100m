@@ -60,7 +60,10 @@ jQuery.fn.extend({
 				parent.sheetInstance = jQuery.sheet.createInstance(set, 0, parent);
 				jQuery.sheet.instance = [parent.sheetInstance];
 			}
-
+//var td =  document.getElementById('0_table0_cell_c0_r0');
+//console.dir(document);
+//parent.sheetInstance.cellEdit(td,false,false);
+//parent.sheetInstance.cellSetActive(td,{col: 0,row: 0},true);
 		});
 		return this;
 	},
@@ -84,42 +87,18 @@ jQuery.sheet = {
 			obj: {//obj = object references
 				//Please note, class references use the tag name because it's about 4 times faster
 
-				barCorner: function() {
-					return jQuery('#' + jS.id.barCorner + jS.i);
-				},
-				barCornerAll: function() {
-					return s.parent.find('div.' + jS.cl.barCorner);
-				},
-				barCornerParent: function() {
-					return jQuery('#' + jS.id.barCornerParent + jS.i);
-				},
-				barCornerParentAll: function() {
-					return s.parent.find('td.' + jS.cl.barCornerParent);
-				},
-				barHelper: function() {
-					return jQuery('div.' + jS.cl.barHelper);
-				},
-				barLeft: function() {
-					return jQuery('#' + jS.id.barLeft + jS.i);
-				},
-				barLeftAll: function() {
-					return s.parent.find('div.' + jS.cl.barLeft);
-				},
-				barLeftParent: function() {
-					return jQuery('#' + jS.id.barLeftParent + jS.i);
-				},
-				barLeftParentAll: function() {
-					return s.parent.find('div.' + jS.cl.barLeftParent);
-				},
-				barLeftHandle: function() {
-					return jQuery('#' + jS.id.barLeftHandle);
-				},
-				barTop: function() {
-					return jQuery('#' + jS.id.barTop + jS.i);
-				},
-				barTopAll: function() {
-					return s.parent.find('div.' + jS.cl.barTop);
-				},
+				barCorner: function() {return jQuery('#' + jS.id.barCorner + jS.i);},
+				barCornerAll: function() {return s.parent.find('div.' + jS.cl.barCorner);},
+				barCornerParent: function() {return jQuery('#' + jS.id.barCornerParent + jS.i);},
+				barCornerParentAll: function() {return s.parent.find('td.' + jS.cl.barCornerParent);},
+				barHelper: function() {return jQuery('div.' + jS.cl.barHelper);},
+				barLeft: function() {return jQuery('#' + jS.id.barLeft + jS.i);},
+				barLeftAll: function() {return s.parent.find('div.' + jS.cl.barLeft);},
+				barLeftParent: function() {return jQuery('#' + jS.id.barLeftParent + jS.i);},
+				barLeftParentAll: function() {return s.parent.find('div.' + jS.cl.barLeftParent);},
+				barLeftHandle: function() {return jQuery('#' + jS.id.barLeftHandle);},
+				barTop: function() {return jQuery('#' + jS.id.barTop + jS.i);},
+				barTopAll: function() {return s.parent.find('div.' + jS.cl.barTop);},
 				barTopParent: function() {
 					return jQuery('#' + jS.id.barTopParent + jS.i);
 				},
@@ -1053,62 +1032,6 @@ jQuery.sheet = {
 					jS.setNav(true);
 					return false;
 				},
-				cellSetFocusFromXY: function(left, top, skipOffset) { /* a handy function the will set a cell active by it's location on the browser;
-					 left: int, pixels left;
-					 top: int, pixels top;
-					 skipOffset: bool, skips offset;
-					 */
-//	console.log("Call cellSetFocusFromXY");
-					var td = jS.getTdFromXY(left, top, skipOffset);
-
-					if (jS.isTd(td)) {
-						jS.themeRoller.cell.clearHighlighted();
-
-						jS.cellEdit(td);
-						return false;
-					} else {
-						return true;
-					}
-				},
-				cellSetHighlightFromKeyCode: function(e) {
-					var c = jS.highlightedLast.colLast;
-					var r = jS.highlightedLast.rowLast;
-					var size = jS.sheetSize();
-					jQuery(jS.cellLast.td).mousedown();
-
-					switch (e.keyCode) {
-						case key.UP:
-							r--;
-							break;
-						case key.DOWN:
-							r++;
-							break;
-						case key.LEFT:
-							c--;
-							break;
-						case key.RIGHT:
-							c++;
-							break;
-					}
-
-					function keepInSize(i, size) {
-						if (i < 0)
-							return 0;
-						if (i > size)
-							return size;
-						return i;
-					}
-
-					r = keepInSize(r, size.height);
-					c = keepInSize(c, size.width);
-
-					td = jS.getTd(jS.i, r, c);
-					jQuery(td).mousemove().mouseup();
-
-					jS.highlightedLast.rowLast = r;
-					jS.highlightedLast.colLast = c;
-					return false;
-				},
 				cellSetFocusFromKeyCode: function(e) { /* invoke a click on next/prev cell */
 //	console.log("cellSetFocusFromKeyCode "+e.keyCode);
 					var c = jS.cellLast.col; //we don't set the cellLast.col here so that we never go into indexes that don't exist
@@ -1560,7 +1483,7 @@ jQuery.sheet = {
 				},
 				cell: {
 					setActive: function() {
-//console.log("Call setActive");
+console.log("Call setActive");
 						this.clearActive();
 						this.setHighlighted(
 						jS.cellLast.td
@@ -1684,7 +1607,7 @@ jQuery.sheet = {
 				//This finished up the edit of the last cell
 				jS.evt.cellEditDone();
 
-//	console.log("Call cellEdit");
+	console.log("Call cellEdit");
 				//jS.obj.formula().val(jS.colLast + jS.rowLast);
 								
 				jS.followMe(td);
@@ -2144,38 +2067,6 @@ jQuery.sheet = {
 				return {
 					col: parseInt(td[0].cellIndex),
 					row: parseInt(td[0].parentNode.rowIndex)
-				}
-			},
-			getTdFromXY: function(left, top, skipOffset) { /* gets cell from point
-				 left: int, pixels left;
-				 top: int, pixels top;
-				 skipOffset: bool, skips pane offset;
-				 */
-				var pane = jS.obj.pane();
-				var paneOffset = (skipOffset ? {
-						left: 0,
-						top: 0
-					} : pane.offset());
-
-				top += paneOffset.top + 2;
-				left += paneOffset.left + 2;
-
-				//here we double check that the coordinates are inside that of the pane, if so then we can continue
-				if ((top >= paneOffset.top && top <= paneOffset.top + pane.height()) &&
-				(left >= paneOffset.left && left <= paneOffset.left + pane.width())) {
-					var td = jQuery(document.elementFromPoint(left - $window.scrollLeft(), top - $window.scrollTop()));
-
-					//I use this snippet to help me know where the point was positioned
-					/*jQuery('<div class="ui-widget-content" style="position: absolute;">TESTING TESTING</div>')
-					 .css('top', top + 'px')
-					 .css('left', left + 'px')
-					 .appendTo('body');
-					 */
-
-					if (jS.isTd(td)) {
-						return td;
-					}
-					return false;
 				}
 			},
 			getBarLeftIndex: function(o) { /* get's index from object */

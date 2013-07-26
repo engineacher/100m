@@ -404,7 +404,7 @@ jQuery.sheet = {
 								newCol: '',
 //Here!
 								reLabel: function() {
-									$.get("/cgi-bin/CGI.pl?pref=row",function(data){
+									$.get("/CGI-Executables/CGI.pl?pref=row",function(data){
 										$("#debug").text(data);
 										var rowNum = data.split(",");
 										o.barParent.children().each( function(i) {
@@ -453,7 +453,7 @@ jQuery.sheet = {
 									return '<td />';
 								},
 								reLabel: function() {
-									$.get("/cgi-bin/CGI.pl?pref=col",function(data){
+									$.get("/CGI-Executables/CGI.pl?pref=col",function(data){
 //										$("#debug").text(data);
 										var rowNum = data.split(",");
 										o.barParent.children().each( function(i) {
@@ -816,7 +816,8 @@ jQuery.sheet = {
 					var style = td.attr('style');
 					var w = td.width();
 					var h = td.height();
-					var textarea = jQuery('<input  maxlength="2" id="' + jS.id.inPlaceEdit + '" class="' + jS.cl.inPlaceEdit + ' ' + jS.cl.uiInPlaceEdit + '"   WRAP="hard"/>')
+					var textarea = jQuery('<input  maxlength="2" id="' + jS.id.inPlaceEdit + '" class="' + jS.cl.inPlaceEdit + ' ' + jS.cl.uiInPlaceEdit + '"   WRAP="hard"/>')
+
 					//var textarea = jQuery('<textarea id="' + jS.id.inPlaceEdit + '" class="' + jS.cl.inPlaceEdit + ' ' + jS.cl.uiInPlaceEdit + '"   WRAP="hard"/>')
 					.css('left', offset.left)
 					.css('top', offset.top)

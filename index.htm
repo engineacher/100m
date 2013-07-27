@@ -37,6 +37,11 @@
 		    });
 		});
 
+			function submitStop(e){
+				if (!e) var e = window.event;
+				if(e.keyCode == 13)
+					$('#okbutton').trigger("click");
+			}
 		</script>
 		<!--Page styles-->
 	</head>
@@ -48,8 +53,8 @@
 		<div id="debug2"></div>
 		<div id="debug3"></div>
 		<div id="loginForm" style="display:none">
-        	<p><label>名前を入れてください:</label><input id="InputName" type="text" name="demo1" /></p>
-        	<p><button type="submit" id="okbutton" name="demo1">OK</button></p>
+        	<p><label>名前を入れてください:</label><input id="InputName" type="text" name="demo1" onKeyPress="return submitStop(event);"/></p>
+        	<p><button type="submit" id="okbutton">OK</button></p>
         </div>
 	</body>
 </html>

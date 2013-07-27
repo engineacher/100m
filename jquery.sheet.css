@@ -455,9 +455,16 @@
 
 
 #jSheetControls_0 {
-	display:none;
+//	display:none;
 }
 #jQuerySheet0 {
 	width:500px;
 	height:500px;
-	}
+}
+
+.incorrect{
+	background-color:#FF0000;
+}
+.correct{
+	background-color:#00FF00;
+}

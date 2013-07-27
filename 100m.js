@@ -49,8 +49,8 @@ jQuery.fn.extend({
 				calculations: {},								//object, used to extend the standard functions that come with sheet
 				resizable: 			false,							//bool, makes the $(obj).sheet(); object resizeable, also adds a resizable formula textarea at top of sheet
 				minSize: {
-					rows: 10,
-					cols: 10
+					rows: 7,
+					cols: 7
 				},			//object - {rows: int, cols: int}, Makes the sheet stay at a certain size when loaded in edit mode, to make modification more productive
 				forceColWidthsOnStartup:false,						//bool, makes cell widths load from pre-made colgroup/col objects, use this if you plan on making the col items, makes widths more stable on startup
 			}, settings);
@@ -977,13 +977,14 @@ jQuery.sheet = {
 										  * parseInt(jS.obj.barLeft().children().eq(jS.rowLast).text())
 										  
 										if((jS.obj.formula().val() != '') && (jS.obj.formula().val() != collectVal)){
-											td.css("background-color" ,"#ff0000");
+											td.addClass("incorrect");
+											
 										}
 										else if(jS.obj.formula().val() == collectVal){
-											td.css("background-color" ,"#00ff00");
+											td.addClass("correct");
 										}
 										else{
-											td.css("background-color" ,"");
+
 										}
 										
 										jS.attrH.setHeight(jS.cellLast.row, 'cell');
@@ -1049,7 +1050,7 @@ jQuery.sheet = {
 						case key.DOWN:
 							overrideIsEdit = true;
 							jS.obj.formula().val(jS.obj.inPlaceEdit().val())
-							if(jS.rowLast == (s.minSize.rows-1)){c++;r=r-10;}
+							if(jS.rowLast == (s.minSize.rows-1)){c++;r=r-s.minSize.rows;}
 							r++;
 							break;
 						case key.LEFT:
@@ -1063,7 +1064,7 @@ jQuery.sheet = {
 						case key.RIGHT:
 							overrideIsEdit = true;
 							jS.obj.formula().val(jS.obj.inPlaceEdit().val())
-							if(jS.colLast == (s.minSize.rows-1)){r++;c=c-10;}
+							if(jS.colLast == (s.minSize.rows-1)){r++;c=c-s.minSize.cols;}
 							c++;
 							break;
 						case key.ENTER:
@@ -1075,7 +1076,7 @@ jQuery.sheet = {
 								}
 								r--;
 							}else{
-								if(jS.rowLast == (s.minSize.rows-1)){c++;r=r-10;}
+								if(jS.rowLast == (s.minSize.rows-1)){c++;r=r-s.minSize.rows;}
 								if(jS.rowLast == (s.minSize.rows-1) && jS.colLast == (s.minSize.cols-1)){r=-1;c=0;}
 								r++;
 							}
@@ -1098,7 +1099,7 @@ jQuery.sheet = {
 								}
 								c--;
 							} else {
-								if(jS.colLast == (s.minSize.rows-1)){r++;c=c-10;}
+								if(jS.colLast == (s.minSize.rows-1)){r++;c=c-s.minSize.cols;}
 								if(jS.rowLast == (s.minSize.rows-1) && jS.colLast == (s.minSize.cols-1)){r=0;c=-1;}
 								c++;
 							}

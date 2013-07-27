@@ -60,10 +60,7 @@ jQuery.fn.extend({
 				parent.sheetInstance = jQuery.sheet.createInstance(set, 0, parent);
 				jQuery.sheet.instance = [parent.sheetInstance];
 			}
-//var td =  document.getElementById('0_table0_cell_c0_r0');
-//console.dir(document);
-//parent.sheetInstance.cellEdit(td,false,false);
-//parent.sheetInstance.cellSetActive(td,{col: 0,row: 0},true);
+
 		});
 		return this;
 	},
@@ -563,7 +560,7 @@ jQuery.sheet = {
 						barTop.append(child);
 					});
 					jS.evt.barMouseDown.width(
-					jS.obj.barTopParent().append(barTop)
+						jS.obj.barTopParent().append(barTop)
 					);
 				},
 				barTopHandle: function(bar, i) {
@@ -978,10 +975,12 @@ jQuery.sheet = {
 										  
 										if((jS.obj.formula().val() != '') && (jS.obj.formula().val() != collectVal)){
 											td.addClass("incorrect");
+											td.removeClass("correct");
 											
 										}
 										else if(jS.obj.formula().val() == collectVal){
 											td.addClass("correct");
+											td.removeClass("incorrect");
 										}
 										else{
 
@@ -2251,10 +2250,10 @@ var jSE = jQuery.sheet.engine = { //Calculations Engine
 	columnLabelIndex: function(str) {
 		// Converts A to 0, B to 1, Z to 25, AA to 26.
 		var num = 0;
-		for (var i = 0; i < str.length; i++) {
-			var digit = str.toUpperCase().charCodeAt(i) - 65;	   // 65 == 'A'.
-			num = (num * 26) + digit;
-		}
+		// for (var i = 0; i < str.length; i++) {
+			// var digit = str.toUpperCase().charCodeAt(i) - 65;	   // 65 == 'A'.
+			// num = (num * 26) + digit;
+		// }
 		
 		return (num >= 0 ? num : 0);
 		//reutrn "?";

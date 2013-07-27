@@ -1,0 +1,5 @@
+						var td = jS.getTd(0, 0, 0);
+						td = jQuery(td);
+						jS.cellEdit(td);
+						
+$("#debug1").text(r);

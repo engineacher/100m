@@ -62,6 +62,7 @@ jQuery.fn.extend({
 			}
 
 		});
+
 		return this;
 	},
 	getSheet: function() {
@@ -742,6 +743,9 @@ jQuery.sheet = {
 					if (fn) {
 						fn(objContainer, pane);
 					}
+var td = jS.getTd(0, 0, 0);
+td = jQuery(td);
+jS.cellSetActive(td,{col:0,row:0});
 
 					return objContainer;
 				},
@@ -750,7 +754,7 @@ jQuery.sheet = {
 					'<tbody>' +
 					'<tr>' +
 					'<td id="' + jS.id.barCornerParent + jS.i + '" class="' + jS.cl.barCornerParent + '">' + //corner
-					'<div style="height: ' + s.colMargin + '; width: ' + s.colMargin + ';" id="' + jS.id.barCorner + jS.i + '" class="' + jS.cl.barCorner +'"' + (jS.isSheetEditable() ? ' onClick="jQuery.sheet.instance[' + I + '].cellSetActiveBar(\'all\');"' : '') + ' title="Select All">&nbsp;</div>' +
+					'<div style="height: ' + s.colMargin + '; width: ' + s.colMargin + ';" id="' + jS.id.barCorner + jS.i + '" class="' + jS.cl.barCorner +'"' + ' title="Select All">&nbsp;</div>' +
 					'</td>' +
 					'<td class="' + jS.cl.barTopTd + '">' + //barTop
 					'<div id="' + jS.id.barTopParent + jS.i + '" class="' + jS.cl.barTopParent + '"></div>' +
@@ -941,7 +945,7 @@ jQuery.sheet = {
 					 */
 					switch (jS.cellLast.isEdit || forceCalc) {
 						case true:
-//	console.log("Call cellEditDone");
+	console.log("Call cellEditDone");
 							jS.obj.inPlaceEdit().remove();
 							var formula = jS.obj.formula();
 							//formula.unbind('keydown'); //remove any lingering events from inPlaceEdit
@@ -1036,6 +1040,7 @@ jQuery.sheet = {
 //	console.log("cellSetFocusFromKeyCode "+e.keyCode);
 					var c = jS.cellLast.col; //we don't set the cellLast.col here so that we never go into indexes that don't exist
 					var r = jS.cellLast.row;
+
 					var overrideIsEdit = false;
 					switch (e.keyCode) {
 						case key.UP:
@@ -1050,6 +1055,7 @@ jQuery.sheet = {
 							overrideIsEdit = true;
 							jS.obj.formula().val(jS.obj.inPlaceEdit().val())
 							if(jS.rowLast == (s.minSize.rows-1)){c++;r=r-s.minSize.rows;}
+							if(jS.rowLast == (s.minSize.rows-1) && jS.colLast == (s.minSize.cols-1)){r=-1;c=0;}
 							r++;
 							break;
 						case key.LEFT:
@@ -1064,6 +1070,7 @@ jQuery.sheet = {
 							overrideIsEdit = true;
 							jS.obj.formula().val(jS.obj.inPlaceEdit().val())
 							if(jS.colLast == (s.minSize.rows-1)){r++;c=c-s.minSize.cols;}
+							if(jS.rowLast == (s.minSize.rows-1) && jS.colLast == (s.minSize.cols-1)){r=0;c=-1;}
 							c++;
 							break;
 						case key.ENTER:
@@ -1079,8 +1086,6 @@ jQuery.sheet = {
 								if(jS.rowLast == (s.minSize.rows-1) && jS.colLast == (s.minSize.cols-1)){r=-1;c=0;}
 								r++;
 							}
-							
-							//jS.obj.formula().val(jS.obj.inPlaceEdit().val())
 							
 							if (jS.highlightedLast.td.length > 1) {
 								var inPlaceEdit = jS.obj.inPlaceEdit();
@@ -1304,7 +1309,8 @@ jQuery.sheet = {
 				 As it turns out, all browsers are different, thus this has evolved to a much uglier beast
 				 */
 				width: function(o, skipCorrection) {
-					return jQuery(o).outerWidth() - (skipCorrection ? 0 : s.boxModelCorrection);
+					var w = jQuery(o).outerWidth() - (skipCorrection ? 0 : s.boxModelCorrection); 
+					return s.newColumnWidth;
 				},
 				widthReverse: function(o, skipCorrection) {
 					return jQuery(o).outerWidth() + (skipCorrection ? 0 : s.boxModelCorrection);
@@ -1982,62 +1988,7 @@ console.log("Call setActive");
 				.width(w);
 			},
 
-			cellSetActiveBar: function(type, start, end) { /* sets a bar active
-				 type: string, "col" || "row" || "all";
-				 start: int, int to start highlighting from;
-				 start: int, int to end highlighting to;
-				 */
-				var size = jS.sheetSize(jQuery('#' + jS.id.sheet + jS.i));
-				var first = (start < end ? start : end);
-				var last = (start < end ? end : start);
-
-				var setActive = function(td, rowStart, colStart, rowFollow, colFollow) {
-				jS.cellEdit(jQuery(jS.getTd(jS.i, rowStart, colStart)));
-
-					setActive = function(td) { //save resources
-						return td;
-					};
-					return td;
-				};
-				var cycleFn;
-
-				var td = [];
-
-				switch (type) {
-					case 'all':
-						cycleFn = function() {
-							setActive = function(td) {
-								jS.cellEdit(jQuery(td));
-								setActive = function() {
-								};
-							};
-							for (var i = 0; i <= size.height; i++) {
-								for (var j = 0; j <= size.width; j++) {
-									td.push(jS.getTd(jS.i, i, j));
-									setActive(td[td.length - 1]);
-									jS.themeRoller.cell.setHighlighted(td[td.length - 1]);
-								}
-							}
-							first = {
-								row: 0,
-								col: 0
-							};
-							last = {
-								row: size.height,
-								col: size.width
-							}
-						};
-						break;
-				}
-
-				cycleFn();
-
-				jS.highlightedLast.td = td;
-				jS.highlightedLast.rowStart = first.row;
-				jS.highlightedLast.colStart = first.col;
-				jS.highlightedLast.rowEnd = last.row;
-				jS.highlightedLast.colEnd = last.col;
-			},
+			
 			sheetClearActive: function() { /* clears formula and bars from being highlighted */
 //	console.log("Call sheetClearActive!")
 				jS.obj.formula().val('');

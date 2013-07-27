@@ -10,7 +10,7 @@
 		<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 		<link rel="icon" href="favicon.ico" type="image/vnd.microsoft.icon">
 		
-		<script type="text/javascript" src="jquery-1.10.2.min.js"></script>
+		<script type="text/javascript" src="jquery-1.10.2.js"></script>
 		<script type="text/javascript" src="100m.js"></script>
 		<script type="text/javascript" src="jquery.blockUI.js"></script>
 
@@ -18,14 +18,16 @@
 		<script type="text/javascript">
 
 		$( function() {
-			//jQuery.blockUI({message: $('#loginForm') });
-			//$("#okbutton").click(function(){
-				//$.unblockUI();
-				//$('#YourName').append($('#InputName').val());
-				$('#jQuerySheet0').sheet({}); //ここでシートの生成。詳細は100m.jsへ。
-				//$("#0_table0_cell_c0_r0").trigger('click');
-
-		    //});
+		 	$('#jQuerySheet0').sheet({}); //ここでシートの生成。詳細は100m.jsへ。
+		 	$('#jQuerySheet0').hide();
+			$.blockUI({message: $("#loginForm") });
+			
+			$("#okbutton").click(function(e){
+				$.unblockUI();
+				$('#jQuerySheet0').show();
+				$('#YourName').text($('#InputName').val());
+		    });
+		    
 			$('#jSheetControls_formula_0').blur(function (e) { //正解数のカウント
 			        $('#debug1').text($('.correct').length);
 			        $('#debug2').text($('#jSheetBarTop_0_0 *').length);
@@ -34,9 +36,7 @@
 			        if($('.correct').length == $('#jSheetBarTop_0_0 *').length * $('#jSheetBarLeft_0_0 *').length){
 			        	alert("Clear!!");
 			        }
-			        
 			});
-			
 		});
 
 		</script>

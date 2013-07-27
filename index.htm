@@ -18,25 +18,23 @@
 		<script type="text/javascript">
 
 		$( function() {
-		 	$('#jQuerySheet0').sheet({}); //ここでシートの生成。詳細は100m.jsへ。
-		 	$('#jQuerySheet0').hide();
 			$.blockUI({message: $("#loginForm") });
 			
 			$("#okbutton").click(function(e){
 				$.unblockUI();
-				$('#jQuerySheet0').show();
+			 	$('#jQuerySheet0').sheet({}); //ここでシートの生成。詳細は100m.jsへ。
 				$('#YourName').text($('#InputName').val());
+				
+				$('#jSheetControls_formula_0').blur(function (e) { //正解数をカウントする関数を生成
+				        //$('#debug1').text($('.correct').length);
+				        $('#debug2').text($('#jSheetBarTop_0_0 *').length);
+				        $('#debug3').text($('#jSheetBarLeft_0_0 *').length);
+				        
+				        if($('.correct').length == $('#jSheetBarTop_0_0 *').length * $('#jSheetBarLeft_0_0 *').length){
+				        	alert("Clear!!");
+				        }
+				});
 		    });
-		    
-			$('#jSheetControls_formula_0').blur(function (e) { //正解数のカウント
-			        $('#debug1').text($('.correct').length);
-			        $('#debug2').text($('#jSheetBarTop_0_0 *').length);
-			        $('#debug3').text($('#jSheetBarLeft_0_0 *').length);
-			        
-			        if($('.correct').length == $('#jSheetBarTop_0_0 *').length * $('#jSheetBarLeft_0_0 *').length){
-			        	alert("Clear!!");
-			        }
-			});
 		});
 
 		</script>

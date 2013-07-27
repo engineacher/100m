@@ -1076,6 +1076,7 @@ jQuery.sheet = {
 								r--;
 							}else{
 								if(jS.rowLast == (s.minSize.rows-1)){c++;r=r-10;}
+								if(jS.rowLast == (s.minSize.rows-1) && jS.colLast == (s.minSize.cols-1)){r=-1;c=0;}
 								r++;
 							}
 							
@@ -1098,6 +1099,7 @@ jQuery.sheet = {
 								c--;
 							} else {
 								if(jS.colLast == (s.minSize.rows-1)){r++;c=c-10;}
+								if(jS.rowLast == (s.minSize.rows-1) && jS.colLast == (s.minSize.cols-1)){r=0;c=-1;}
 								c++;
 							}
 							break;

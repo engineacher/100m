@@ -49,8 +49,8 @@ jQuery.fn.extend({
 				calculations: {},								//object, used to extend the standard functions that come with sheet
 				resizable: 			false,							//bool, makes the $(obj).sheet(); object resizeable, also adds a resizable formula textarea at top of sheet
 				minSize: {
-					rows: 2,
-					cols: 2
+					rows: 5,
+					cols: 5
 				},			//object - {rows: int, cols: int}, Makes the sheet stay at a certain size when loaded in edit mode, to make modification more productive
 				forceColWidthsOnStartup:false,						//bool, makes cell widths load from pre-made colgroup/col objects, use this if you plan on making the col items, makes widths more stable on startup
 			}, settings);

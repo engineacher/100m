@@ -151,13 +151,18 @@
 /* Containers styleing*/
 .jSheetBarCorner
 {
-	border-width: 1px ! important;
+	border-width: px ! important;
 	text-align: center;
+	width:40px ! important;
+	height:40px ! important;
 }
 
 .jSheetBarCornerParent
 {
-	/*border: none ! important;*/
+	border: none ! important;
+	width:40px ! important;
+	height:40px ! important;
+	margin: 0px 1px 1px 0px;
 }
 
 .jSheetBarTopParent
@@ -166,7 +171,7 @@
 	background-image: none ! important;
 	vertical-align: middle ! important;
 	overflow: hidden ! important;
-	background-color:#cccccc;
+	/*background-color:#cccccc;*/
 }
 
 .jSheetBarLeftParent
@@ -175,7 +180,7 @@
 	background-image: none ! important;
 	vertical-align: middle;
 	overflow: hidden ! important;
-	height: auto;
+	/*height: auto;*/
 }
 
 .sheetPane
@@ -189,6 +194,8 @@
 	background-image: none ! important;
 	border-width: 0px;
 	position: relative ! important;
+	margin-top:-1px;
+	margin-left:-1px;
 	
 	/*width: auto;
 	height: auto;*/
@@ -199,11 +206,9 @@
 {
     position: relative ! important;
 	border-width: 0px ! important;
-	min-width: 100px;
-	width: auto;
+	height: 40px ! important;
 	font-size: 14pt;
 	margin: 0px 0px 0px 0px;
-	padding: 0px 0px 0px 1px;
 }
 .jSheetBarTopHandle
 {
@@ -220,7 +225,6 @@
 {
 	position: relative ! important;
 	border-width: 1px ! important;
-	min-height: 100px;
 	margin: 0px 0px 0px 0px;
 }
 .jSheetBarLeft span
@@ -233,28 +237,26 @@
 .jSheetBarLeftTd
 {
 	border: none ! important;
-	height: auto;
+	/*height: auto;*/
 }
 
 .jSheetBarLeft > div
 {
 	text-align: center;
 	font-size: .8em;
-	height: inherit;
+	display:block;
+	height: inherit ! important;
+	padding-top: 8px;
 	border-left: none ! important;
 	border-right: none ! important;
 	position: relative ! important;
-	vertical-align: middle ! important;
-	min-width: 30px ! important;
 	z-index: 999;
-	position: relative;
-	height: 20px ! important;
-	padding:10px 0px 10px 0px ! important;
+	height: 40px ! important;
 }
 
 .jSheetBarTopTd
 {
-	border: none ! important;	
+	/*border: none ! important;	*/
 	vertical-align: middle ! important;
 }
 
@@ -265,13 +267,14 @@
 	float: left;
 	display:block;
 	height: inherit ! important;
-	padding-top: 2px;
+	padding-top: 8px;
 	overflow: hidden;
 	border-top: none ! important;
 	border-bottom: none ! important;
 	min-width: 25px ! important;
 	z-index: 999;
 	position: relative;
+	width: 40px ! important;
 }
 
 .jSheetControls img
@@ -380,4 +383,11 @@
 }
 .correct{
 	background-color:#00FF00;
+}
+* {
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+         -o-box-sizing: border-box;
+        -ms-box-sizing: border-box;
+            box-sizing: border-box;
 }

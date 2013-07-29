@@ -3,3 +3,5 @@
 						jS.cellEdit(td);
 						
 $("#debug1").text(r);
+
+margin-top: -1em;

@@ -33,7 +33,7 @@ jQuery.fn.extend({
 				newColumnWidth: 	40, 							//int, the width of new columns or columns that have no width assigned
 				title: 				"100m calc", 							//html, general title of the sheet group
 				parent: 			parent, 					//object, sheet's parent, DON'T CHANGE
-				colMargin: 			30, 							//int, the height and the width of all bar items, and new rows
+				colMargin: 			40, 							//int, the height and the width of all bar items, and new rows
 				//fn, called just before jQuery.sheet loads
 				fnAfter: function() {
 				},	 				//fn, called just after all sheets load
@@ -45,7 +45,7 @@ jQuery.fn.extend({
 				},					//fn, called when a spreadsheet is switched inside of an instance of sheet
 				fnPaneScroll: function() {
 				},					//fn, called when a spreadsheet is scrolled
-				boxModelCorrection: 2, 								//int, attempts to correct the differences found in heights and widths of different browsers, if you mess with this, get ready for the must upsetting and delacate js ever
+				boxModelCorrection: 0, 								//int, attempts to correct the differences found in heights and widths of different browsers, if you mess with this, get ready for the must upsetting and delacate js ever
 				calculations: {},								//object, used to extend the standard functions that come with sheet
 				resizable: 			false,							//bool, makes the $(obj).sheet(); object resizeable, also adds a resizable formula textarea at top of sheet
 				minSize: {

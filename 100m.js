@@ -121,9 +121,6 @@ jQuery.sheet = {
 				formula: function() {
 					return jQuery('#' + jS.id.formula);
 				},
-				fullScreen: function() {
-					return jQuery('div.' + jS.cl.fullScreen);
-				},
 
 				inPlaceEdit: function() {
 					return jQuery('#' + jS.id.inPlaceEdit);
@@ -194,7 +191,6 @@ jQuery.sheet = {
 				formula: 			'jSheetControls_formula_' + I,
 				inPlaceEdit:		'jSheetInPlaceEdit_' + I,
 				label: 				'jSheetControls_loc_' + I,
-				menu:				'jSheetMenu_' + I,
 				pane: 				'jSheetEditPane_' + I + '_',
 				sheet: 				'jSheet_' + I + '_',
 				tableControl:		'tableControl_' + I + '_',
@@ -223,15 +219,12 @@ jQuery.sheet = {
 				error:					'jSheetError',
 				formula: 				'jSheetControls_formula',
 				formulaParent:			'jSheetControls_formulaParent',
-				fullScreen:				'jSheetFullScreen',
 				inPlaceEdit:			'jSheetInPlaceEdit',
-				menu:					'jSheetMenu',
 				parent:					'jSheetParent',
 				sheet: 					'jSheet',
 				sheetPaneTd:			'sheetPane',
 				label: 					'jSheetControls_loc',
 				pane: 					'jSheetEditPane',
-				tabContainerFullScreen: 'jSheetFullScreenTabContainer',
 				tableControl:			'tableControl',
 				title:					'jSheetTitle',
 				ui:						'jSheetUI',
@@ -246,7 +239,6 @@ jQuery.sheet = {
 				uiControl: 				'ui-widget-header ui-corner-top',
 				uiControlTextBox:		'ui-widget-content',
 				uiError:				'ui-state-error',
-				uiFullScreen:			'ui-widget-content ui-corner-all',
 				uiInPlaceEdit:			'ui-state-active',
 				uiPane: 				'ui-widget-content',
 				uiParent: 				'ui-widget-content ui-corner-all',
@@ -746,6 +738,7 @@ jQuery.sheet = {
 var td = jS.getTd(0, 0, 0);
 td = jQuery(td);
 jS.cellSetActive(td,{col:0,row:0});
+$("#jQuerySheet0").css('cssText',"width:600px !important;height:600px !important;");
 
 					return objContainer;
 				},
@@ -754,7 +747,7 @@ jS.cellSetActive(td,{col:0,row:0});
 					'<tbody>' +
 					'<tr>' +
 					'<td id="' + jS.id.barCornerParent + jS.i + '" class="' + jS.cl.barCornerParent + '">' + //corner
-					'<div style="height: ' + s.colMargin + '; width: ' + s.colMargin + ';" id="' + jS.id.barCorner + jS.i + '" class="' + jS.cl.barCorner +'"' + ' title="Select All">&nbsp;</div>' +
+					'<div style="height: ' + s.colMargin + '; width: ' + s.colMargin + ';" id="' + jS.id.barCorner + jS.i + '" class="' + jS.cl.barCorner +'"' + '>×</div>' +
 					'</td>' +
 					'<td class="' + jS.cl.barTopTd + '">' + //barTop
 					'<div id="' + jS.id.barTopParent + jS.i + '" class="' + jS.cl.barTopParent + '"></div>' +
@@ -792,7 +785,7 @@ jS.cellSetActive(td,{col:0,row:0});
 					var style = td.attr('style');
 					var w = td.width();
 					var h = td.height();
-					var textarea = jQuery('<input  maxlength="2" id="' + jS.id.inPlaceEdit + '" class="' + jS.cl.inPlaceEdit + ' ' + jS.cl.uiInPlaceEdit + '"   WRAP="hard"/>')
+					var textarea = jQuery('<input  maxlength="2" id="' + jS.id.inPlaceEdit + '" class="' + jS.cl.inPlaceEdit + ' ' + jS.cl.uiInPlaceEdit + '"  style="text-align: center;font-size: 1em; " WRAP="hard"/>')
 
 					//var textarea = jQuery('<textarea id="' + jS.id.inPlaceEdit + '" class="' + jS.cl.inPlaceEdit + ' ' + jS.cl.uiInPlaceEdit + '"   WRAP="hard"/>')
 					.css('left', offset.left)
@@ -1198,13 +1191,13 @@ jS.cellSetActive(td,{col:0,row:0});
 
 							var i = jS.getBarLeftIndex(e.target);
 							if (i == -1)
-								return false;
+								//return false;
 
 							o.parent()
 							.mousedown()
 							.mouseup();
 
-							return false;
+							return true;
 						})
 						.parent()
 						.mouseover( function(e) {
@@ -1241,12 +1234,12 @@ jS.cellSetActive(td,{col:0,row:0});
 
 							var i = jS.getBarTopIndex(e.target);
 							if (i == -1)
-								return false;
+								//return false;
 							o.parent()
 							.mousedown()
 							.mouseup();
 
-							return false;
+							return true;
 						})
 						.parent();
 						if (jS.isSheetEditable()) { //only let editable select

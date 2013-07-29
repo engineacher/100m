@@ -24,7 +24,7 @@
 				$.unblockUI();
 			 	$('#jQuerySheet0').sheet({}); //ここでシートの生成。詳細は100m.jsへ。
 				$('#YourName').text($('#InputName').val());
-				
+								
 				$('#jSheetControls_formula_0').blur(function (e) { //正解数をカウントする関数を生成
 				        //$('#debug1').text($('.correct').length);
 				        $('#debug2').text($('#jSheetBarTop_0_0 *').length);
@@ -47,7 +47,7 @@
 	</head>
 
 	<body>
-		<div id="YourName"></div>
+		<div id="YourName" style="width=200px"></div>
 		<div id="jQuerySheet0" class="jQuerySheet"></div>
 		<div id="debug1"></div>
 		<div id="debug2"></div>

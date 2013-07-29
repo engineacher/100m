@@ -23,6 +23,8 @@
 	padding: 0px ! important;
 	border: none ! important;
 	margin: 0px;
+	width: inherit;
+	/*height: inherit;*/
 }
 
 /* Menu */
@@ -30,7 +32,6 @@
 	position: absolute;
 	z-index: 99999;
 	font-size: .9em;
-	cursor: pointer;
 	right: .3em;
 	top: .2em;
 }
@@ -44,82 +45,6 @@
 	-webkit-border-top-right-radius: inherit;
 	border-top-right-radius: inherit;
 }
-.jSheetMenu {
-	padding: 3px;
-	background: none;
-	border: none ! important;
-}
-.jSheetMenu *
-{
-	border-color: inherit ! important;
-	border-width: 1px;
-	text-decoration: none ! important;
-	white-space: nowrap;
-	width: auto;
-}
-
-.jSheetMenu ul
-{
-	cursor: pointer;
-	padding: 0px ! important;
-	margin: 0px ! important;
-	border: none ! important;
-	z-index: 999999;
-	position:relative;
-	margin:0;
-	padding:0;
-	list-style:none;
-	list-style-position:outside;
-}
-
-.jSheetMenu a
-{
-	display:block;
-	padding:0px 5px;
-}
-
-.jSheetMenu li
-{
-	float:left;
-	position:relative;
-	border: none;
-	background-image: none;
-	border-width: 1px;
-	width: inherit;
-}
-.jSheetMenu li:hover{
-	background-image: inherit;
-}
-
-.jSheetMenu ul ul {
-	position:absolute;
-	display:none;
-	width:12em;
-	top:1.5em;
-}
-
-.jSheetMenu li ul a{
-	width:12em;
-	height:auto;
-	float:left;
-}
-
-.jSheetMenu ul ul{
-	top:auto;
-}	
-
-.jSheetMenu li ul ul {
-	left:12em;
-	margin:0px 0 0 10px;
-}
-
-.jSheetMenu li:hover ul ul, .jSheetMenu li:hover ul ul ul, .jSheetMenu li:hover ul ul ul ul{
-	display:none;
-}
-.jSheetMenu li:hover ul, .jSheetMenu li li:hover ul, .jSheetMenu li li li:hover ul, .jSheetMenu li li li li:hover ul{
-	display:block;
-}
-
 .menu
 {
 	display: none;
@@ -130,19 +55,20 @@
 }
 .jSheetUI
 {
-	width: auto;
+	/*width: auto;*/
 	border-color: inherit ! important;
+	width: inherit ! important;
+	/*height: inherit ! important;*/
 }
 .jSheetTabContainer
 {
-	vertical-align: bottom;
+	vertical-align: middle;
 	text-align: left ! important;
 }
 .jSheetTabContainer span
 {
 	
 	padding: 2px 5px 0 5px ! important;
-	cursor: pointer;
 }
 .jSheetTabContainer *, .Div *
 {
@@ -154,6 +80,9 @@
 /*	border-collapse: collapse ! important; */
 	border: none ! important;
 	position: absolute ! important;
+	text-align: center;
+	width: inherit ! important;
+	height: inherit ! important;
 }
 
 /* Sheet styling */
@@ -222,23 +151,22 @@
 /* Containers styleing*/
 .jSheetBarCorner
 {
-	cursor: pointer;
 	border-width: 1px ! important;
+	text-align: center;
 }
 
 .jSheetBarCornerParent
 {
-	border: none ! important;
+	/*border: none ! important;*/
 }
 
 .jSheetBarTopParent
 {
     position: relative ! important;
 	background-image: none ! important;
-	vertical-align: middle;
+	vertical-align: middle ! important;
 	overflow: hidden ! important;
-	cursor: pointer;
-	overflow: hidden ! important;
+	background-color:#cccccc;
 }
 
 .jSheetBarLeftParent
@@ -246,8 +174,6 @@
     position: relative ! important;
 	background-image: none ! important;
 	vertical-align: middle;
-	overflow: hidden ! important;
-	cursor: pointer;
 	overflow: hidden ! important;
 	height: auto;
 }
@@ -263,8 +189,9 @@
 	background-image: none ! important;
 	border-width: 0px;
 	position: relative ! important;
-	width: auto;
-	height: auto;
+	
+	/*width: auto;
+	height: auto;*/
 }
 /* Bar item styling */
 
@@ -274,6 +201,9 @@
 	border-width: 0px ! important;
 	min-width: 100px;
 	width: auto;
+	font-size: 14pt;
+	margin: 0px 0px 0px 0px;
+	padding: 0px 0px 0px 1px;
 }
 .jSheetBarTopHandle
 {
@@ -291,6 +221,7 @@
 	position: relative ! important;
 	border-width: 1px ! important;
 	min-height: 100px;
+	margin: 0px 0px 0px 0px;
 }
 .jSheetBarLeft span
 {
@@ -317,13 +248,14 @@
 	min-width: 30px ! important;
 	z-index: 999;
 	position: relative;
-	height: 40px ! important;
+	height: 20px ! important;
+	padding:10px 0px 10px 0px ! important;
 }
 
 .jSheetBarTopTd
 {
 	border: none ! important;	
-	
+	vertical-align: middle ! important;
 }
 
 .jSheetBarTop > div
@@ -351,7 +283,7 @@
 {
 	display: inline;
 	height: inherit ! important;
-	width: auto;
+	/*width: auto;*/
 }
 
 .jSheetInPlaceEdit
@@ -368,25 +300,6 @@
 	background-color: transparent ! important;
 }
 
-.jSheetFullScreen
-{
-	top: 5px;
-	left: 5px;
-	position: fixed;
-	top: expression(eval(document.body.scrollTop + 15) + "px");
-	left: expression(eval(document.body.scrollLeft) + "px");
-	z-index: 9999;
-}
-
-.jSheetFullScreenTabContainer
-{
-	bottom: 10px;
-	left: 10px;
-	position: fixed;
-	top: expression(eval(document.body.scrollTop + 15) + "px");
-	left: expression(eval(document.body.scrollLeft) + "px");
-}
-
 .jSheetAutoFiller
 {
 	position: absolute;
@@ -400,14 +313,14 @@
 
 .jSheetTitle, .jSheetInlineMenu
 {
-	width: auto;
+	/*width: auto;*/
 	text-align: center;
 	border: none ! important;
 }
 
 .jSheetChart
 {
-	width: auto;
+	/*width: auto;*/
 	height: inherit;
 }
 
@@ -418,7 +331,7 @@
 
 .jSheetParent, .jSheetParent div
 {
-	padding: 0px ! important;
+	/*padding: 0px ! important; */
 }
 
 /* Cell styler classes */
@@ -457,10 +370,10 @@
 #jSheetControls_0 {
 	display:none;
 }
-#jQuerySheet0 {
-	width:500px;
+/*#jQuerySheet0 {
+	width:auto;
 	height:500px;
-}
+}*/
 
 .incorrect{
 	background-color:#FF0000;

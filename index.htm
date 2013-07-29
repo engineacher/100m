@@ -1,9 +1,9 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html>
 <html lang="ja">
 	<head>
 		<title>100m</title>
 		<!--Required-->
-		<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+		<meta charset="UTF-8">
 		<link rel="stylesheet" type="text/css" href="jquery.sheet.css" >
 		<link rel="stylesheet" type="text/css" href="jquery-ui/theme/jquery-ui.css" >
 		
@@ -18,10 +18,10 @@
 		<script type="text/javascript">
 
 		$( function() {
-			$.blockUI({message: $("#loginForm") });
+			//$.blockUI({message: $("#loginForm") });
 			
-			$("#okbutton").click(function(e){
-				$.unblockUI();
+			//$("#okbutton").click(function(e){
+			//	$.unblockUI();
 			 	$('#jQuerySheet0').sheet({}); //ここでシートの生成。詳細は100m.jsへ。
 				$('#YourName').text($('#InputName').val());
 								
@@ -35,7 +35,7 @@
 				        }
 				});
 		    });
-		});
+		//});
 
 			function submitStop(e){
 				if (!e) var e = window.event;

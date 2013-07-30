@@ -81,8 +81,8 @@
 	border: none ! important;
 	position: absolute ! important;
 	text-align: center;
-	width: inherit ! important;
-	height: inherit ! important;
+	/*width: inherit ! important;
+	height: inherit ! important;*/
 }
 
 /* Sheet styling */
@@ -96,7 +96,7 @@
 	background-image: none ! important;
 	font-family: arial, serif;
 	overflow: hidden;
-	height: auto ! important;
+	/*height: auto ! important;*/
 	border-spacing: 0px ! important;
 	border-width: 1px ! important;
 	margin-bottom: 20px ! important;
@@ -116,6 +116,7 @@
 	-moz-border-radius: 0px 0px 0px 0px;
 	color:  inherit ! important;
 	border-width: 1px ! important;
+	height: 40px ! important;
 }
 .jSheet td, .jSheet th {
 	border-width: 1px ! important;
@@ -134,14 +135,6 @@
 	position: relative;
 	min-width: 40px ! important;
 }
-.jSheetError {
-	text-align: left;
-	width: inherit ! important;
-	height: inherit ! important;
-	overflow: auto;
-	padding: 0px;
-	margin: 0px;
-}
 
 .jSheet colgroup col
 {
@@ -153,15 +146,16 @@
 {
 	border-width: px ! important;
 	text-align: center;
-	width:40px ! important;
-	height:40px ! important;
+	width: 40px ! important;
+	height: 40px ! important;
+	padding-top: 8px;
 }
 
 .jSheetBarCornerParent
 {
 	border: none ! important;
-	width:40px ! important;
-	height:40px ! important;
+	width: 40px ! important;
+	height: 40px ! important;
 	margin: 0px 1px 1px 0px;
 }
 
@@ -171,7 +165,7 @@
 	background-image: none ! important;
 	vertical-align: middle ! important;
 	overflow: hidden ! important;
-	/*background-color:#cccccc;*/
+	width: auto ! important;
 }
 
 .jSheetBarLeftParent
@@ -180,7 +174,8 @@
 	background-image: none ! important;
 	vertical-align: middle;
 	overflow: hidden ! important;
-	/*height: auto;*/
+	width: 40px ! important;
+	height: auto ! important;
 }
 
 .sheetPane
@@ -190,15 +185,15 @@
 
 .jSheetEditPane
 {
-    overflow: auto ! important;
+    overflow: hidden ! important;
 	background-image: none ! important;
 	border-width: 0px;
 	position: relative ! important;
 	margin-top:-1px;
 	margin-left:-1px;
 	
-	/*width: auto;
-	height: auto;*/
+	width: auto ! important;
+	height: auto ! important;
 }
 /* Bar item styling */
 
@@ -213,7 +208,6 @@
 .jSheetBarTopHandle
 {
 	top: 0em ! important;
-	cursor: move ! important;
 }
 
 .jSheetBarLeftHandle
@@ -225,7 +219,9 @@
 {
 	position: relative ! important;
 	border-width: 1px ! important;
-	margin: 0px 0px 0px 0px;
+	margin: 0px 0px 20px 0px;
+	width: 40px ! important;
+	/*height: 100% ! important;*/
 }
 .jSheetBarLeft span
 {
@@ -237,7 +233,8 @@
 .jSheetBarLeftTd
 {
 	border: none ! important;
-	/*height: auto;*/
+	width: 40px ! important;
+	/*height: 100% ! important;*/
 }
 
 .jSheetBarLeft > div
@@ -245,13 +242,15 @@
 	text-align: center;
 	font-size: .8em;
 	display:block;
-	height: inherit ! important;
-	padding-top: 8px;
+	padding-top: 8px ! important;
 	border-left: none ! important;
 	border-right: none ! important;
 	position: relative ! important;
 	z-index: 999;
 	height: 40px ! important;
+	width: 40px ! important;
+	border-width: 1px ! important;
+	
 }
 
 .jSheetBarTopTd
@@ -282,17 +281,13 @@
 	border: none;
 }
 
-.safeImg
-{
-	display: inline;
-	height: inherit ! important;
-	/*width: auto;*/
-}
 
 .jSheetInPlaceEdit
 {
 	position: absolute;
 	overflow: auto;
+	height: 40px ! important;
+	width: 40px ! important;
 }
 
 .colorPickers *
@@ -303,17 +298,6 @@
 	background-color: transparent ! important;
 }
 
-.jSheetAutoFiller
-{
-	position: absolute;
-	height: 8px;
-	width: 8px;
-	top: 0px;
-	left: 0px;
-	cursor: crosshair ! important;
-	display: none;
-}
-
 .jSheetTitle, .jSheetInlineMenu
 {
 	/*width: auto;*/
@@ -321,16 +305,7 @@
 	border: none ! important;
 }
 
-.jSheetChart
-{
-	/*width: auto;*/
-	height: inherit;
-}
 
-.bodyNoScroll
-{
-	overflow: hidden ! important;
-}
 
 .jSheetParent, .jSheetParent div
 {

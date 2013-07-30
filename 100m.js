@@ -49,8 +49,8 @@ jQuery.fn.extend({
 				calculations: {},								//object, used to extend the standard functions that come with sheet
 				resizable: 			false,							//bool, makes the $(obj).sheet(); object resizeable, also adds a resizable formula textarea at top of sheet
 				minSize: {
-					rows: 5,
-					cols: 5
+					rows: 20,
+					cols: 20
 				},			//object - {rows: int, cols: int}, Makes the sheet stay at a certain size when loaded in edit mode, to make modification more productive
 				forceColWidthsOnStartup:false,						//bool, makes cell widths load from pre-made colgroup/col objects, use this if you plan on making the col items, makes widths more stable on startup
 			}, settings);
@@ -80,6 +80,10 @@ jQuery.sheet = {
 			version: '2.0.0 trunk',
 			i: 0,
 			I: I,
+			maxsize: {
+				maxwidth: (s.minSize.cols + 1) * 40 + 2,
+				maxheight: (s.minSize.rows + 1) * 40 + 2
+			},
 			sheetCount: 0,
 			spreadsheets: [], //the actual spreadsheets are going to be populated here
 			obj: {//obj = object references
@@ -111,9 +115,6 @@ jQuery.sheet = {
 				},
 				cellHighlighted: function() {
 					return jQuery(jS.highlightedLast.td);
-				},
-				chart: function() {
-					return jQuery('div.' + jS.cl.chart);
 				},
 				controls: function() {
 					return jQuery('#' + jS.id.controls);
@@ -214,7 +215,6 @@ jQuery.sheet = {
 				barTopTd:				'jSheetBarTopTd',
 				cellActive:				'jSheetCellActive',
 				cellHighlighted: 		'jSheetCellHighighted',
-				chart:					'jSheetChart',
 				controls:				'jSheetControls',
 				error:					'jSheetError',
 				formula: 				'jSheetControls_formula',
@@ -738,7 +738,10 @@ jQuery.sheet = {
 var td = jS.getTd(0, 0, 0);
 td = jQuery(td);
 jS.cellSetActive(td,{col:0,row:0});
-$("#jQuerySheet0").css('cssText',"width:600px !important;height:600px !important;");
+
+ // $("body").css('cssText',"width:"+jS.maxsize.maxwidth+ "px !important;height:"+jS.maxsize.maxheight+ "px !important;");
+ $("#jQuerySheet0").css('cssText',"width:"+jS.maxsize.maxwidth+ "px !important;height:"+jS.maxsize.maxheight+ "px !important;");
+// console.log(jS.maxsize);
 
 					return objContainer;
 				},
@@ -790,8 +793,8 @@ $("#jQuerySheet0").css('cssText',"width:600px !important;height:600px !important
 					//var textarea = jQuery('<textarea id="' + jS.id.inPlaceEdit + '" class="' + jS.cl.inPlaceEdit + ' ' + jS.cl.uiInPlaceEdit + '"   WRAP="hard"/>')
 					.css('left', offset.left)
 					.css('top', offset.top)
-					.width(w)
-					.height(h)
+					// .width(w)
+					// .height(h)
 					.keydown(jS.evt.inPlaceEditOnKeyDown)
 					.keyup( function() {
 						formula.val(textarea.val());
@@ -2139,7 +2142,7 @@ console.log("Call setActive");
 				tds += standardTd;
 			}
 			
-			var standardTr = '<tr' + (h ? ' height="' + h + 'px" style="height: ' + h + 'px;"' : '') + '>' + tds + '</tr>';
+			var standardTr = '<tr>' + tds + '</tr>';
 			var trs = '';
 			for (var i = rowsCount; i >= 1; i--) {
 				trs += standardTr;

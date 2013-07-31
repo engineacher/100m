@@ -16,32 +16,66 @@
 
 		<!--/Optional-->
 		<script type="text/javascript">
-
+				
 		$( function() {
-			//$.blockUI({message: $("#loginForm") });
-			
-			//$("#okbutton").click(function(e){
-			//	$.unblockUI();
-			 	$('#jQuerySheet0').sheet({}); //ここでシートの生成。詳細は100m.jsへ。
-				$('#YourName').text($('#InputName').val());
-								
-				$('#jSheetControls_formula_0').blur(function (e) { //正解数をカウントする関数を生成
-				        //$('#debug1').text($('.correct').length);
-				        $('#debug2').text($('#jSheetBarTop_0_0 *').length);
-				        $('#debug3').text($('#jSheetBarLeft_0_0 *').length);
-				        
-				        if($('.correct').length == $('#jSheetBarTop_0_0 *').length * $('#jSheetBarLeft_0_0 *').length){
-				        	alert("Clear!!");
-				        }
-				});
-		    });
-		//});
+			$.blockUI({message: $("#loginForm") });
+			$("#okbutton").click(function(e){			
+				$.blockUI({message: $('<img src="start.gif" />') });
 
-			function submitStop(e){
-				if (!e) var e = window.event;
-				if(e.keyCode == 13)
-					$('#okbutton').trigger("click");
+				//setTimeout($.unblockUI, 3000); 
+		        setTimeout(function() { 
+		            $.unblockUI({ 
+		                onUnblock: function(){ 
+					        Start=new Date();
+							$('#jQuerySheet0').sheet({}); //ここでシートの生成。詳細は100m.jsへ。
+							$('#YourName').text($('#InputName').val());
+					        myButton = 0;
+							myWatch(0); //タイマーセット
+																		
+							$('#jSheetControls_formula_0').blur(function (e) { //正解数をカウントする関数を生成
+							        //$('#debug1').text($('.correct').length);
+							        $('#debug2').text($('#jSheetBarTop_0_0 *').length);
+							        $('#debug3').text($('#jSheetBarLeft_0_0 *').length);
+							        
+							        if($('.correct').length == $('#jSheetBarTop_0_0 *').length * $('#jSheetBarLeft_0_0 *').length){
+							        	alert("Clear time is"+$("#myClick").text());
+							        	clearInterval( myInterval ); 
+							        }
+							});
+		                } 
+		            }); 
+
+		        }, 3000); 
+		    });
+		});
+		function onNameEnter(e){
+			if (!e) var e = window.event;
+			if(e.keyCode == 13){
+				$('#okbutton').trigger("click");				
 			}
+		}
+		
+function myWatch(flug){
+  if (myButton==0){ 
+    Start=new Date();
+    myButton = 1;
+    myInterval=setInterval("myWatch(1)",1);
+  } else { 
+    if (flug==0){
+      myButton = 0;
+      clearInterval( myInterval ); 
+    }
+    Stop=new Date();
+    T = Stop.getTime() - Start.getTime();
+    H = Math.floor(T/(60*60*1000));
+    T = T-(H*60*60*1000);
+    M = Math.floor(T/(60*1000));
+    T = T-(M*60*1000);
+    S = Math.floor(T/1000); 
+    Ms = T%100; 
+    $("#myClick").text(M+"分"+S+"秒"+Ms);
+  }
+}
 		</script>
 		<!--Page styles-->
 	</head>
@@ -53,8 +87,10 @@
 		<div id="debug2"></div>
 		<div id="debug3"></div>
 		<div id="loginForm" style="display:none">
-        	<p><label>名前を入れてください:</label><input id="InputName" type="text" name="demo1" onKeyPress="return submitStop(event);"/></p>
+        	<p><label>名前を入れてください:</label><input id="InputName" type="text" name="demo1" onKeyPress="return onNameEnter(event);"/></p>
         	<p><button type="submit" id="okbutton">OK</button></p>
         </div>
+        <div id="myClick"></div>
+
 	</body>
 </html>

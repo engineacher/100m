@@ -10,3 +10,7 @@ margin-top: -1em;
 	height: inherit ! important;
 	
 	height: auto ! important;
+	
+
+タイマーを実装する
+まず、はじめのアニメーションを実装

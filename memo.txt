@@ -5,3 +5,8 @@
 $("#debug1").text(r);
 
 margin-top: -1em;
+
+	width: inherit ! important;
+	height: inherit ! important;
+	
+	height: auto ! important;

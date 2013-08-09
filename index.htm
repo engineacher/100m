@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="ja">
 	<head>
-		<title>100m</title>
+		<title>100マス計算！</title>
 		<!--Required-->
 		<meta charset="UTF-8">
-		<link rel="stylesheet" type="text/css" href="jquery.sheet.css" >
-		<link rel="stylesheet" type="text/css" href="jquery-ui/theme/jquery-ui.css" >
+		<link rel="stylesheet" type="text/css" href="CSS/jquery.sheet.css" >
+		<link rel="stylesheet" type="text/css" href="CSS/jquery-ui.css" >
 		
 		<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 		<link rel="icon" href="favicon.ico" type="image/vnd.microsoft.icon">
@@ -18,14 +18,18 @@
 		<script type="text/javascript">
 				
 		$( function() {
-			$.blockUI({message: $("#loginForm") });
-			$("#okbutton").click(function(e){			
-				$.blockUI({message: $('<img src="start.gif" />') });
-
-				//setTimeout($.unblockUI, 3000); 
-		        setTimeout(function() { 
-		            $.unblockUI({ 
-		                onUnblock: function(){ 
+			var misscount = 0;
+			var nowmiss = 0;
+			var oldmiss = 0;
+			
+			// $.blockUI({message: $("#loginForm") });
+			// $("#okbutton").click(function(e){			
+				// $.blockUI({message: $('<img src="start.gif" />') });
+// 
+				// //setTimeout($.unblockUI, 3000); 
+		        // setTimeout(function() { 
+		            // $.unblockUI({ 
+		                // onUnblock: function(){ 
 					        Start=new Date();
 							$('#jQuerySheet0').sheet({}); //ここでシートの生成。詳細は100m.jsへ。
 							$('#YourName').text($('#InputName').val());
@@ -33,7 +37,13 @@
 							myWatch(0); //タイマーセット
 																		
 							$('#jSheetControls_formula_0').blur(function (e) { //正解数をカウントする関数を生成
-							        //$('#debug1').text($('.correct').length);
+							        nowmiss = $('.incorrect').length;
+							        if(nowmiss > oldmiss){
+							        	misscount++;
+							        }
+							        oldmiss = nowmiss;
+							        
+							        $('#debug1').text(misscount);
 							        $('#debug2').text($('#jSheetBarTop_0_0 *').length);
 							        $('#debug3').text($('#jSheetBarLeft_0_0 *').length);
 							        
@@ -42,12 +52,13 @@
 							        	clearInterval( myInterval ); 
 							        }
 							});
-		                } 
-		            }); 
-
-		        }, 3000); 
-		    });
+		                // } 
+		            // }); 
+// 
+		        // }, 3000); 
+		    // });
 		});
+		
 		function onNameEnter(e){
 			if (!e) var e = window.event;
 			if(e.keyCode == 13){
@@ -55,27 +66,27 @@
 			}
 		}
 		
-function myWatch(flug){
-  if (myButton==0){ 
-    Start=new Date();
-    myButton = 1;
-    myInterval=setInterval("myWatch(1)",1);
-  } else { 
-    if (flug==0){
-      myButton = 0;
-      clearInterval( myInterval ); 
-    }
-    Stop=new Date();
-    T = Stop.getTime() - Start.getTime();
-    H = Math.floor(T/(60*60*1000));
-    T = T-(H*60*60*1000);
-    M = Math.floor(T/(60*1000));
-    T = T-(M*60*1000);
-    S = Math.floor(T/1000); 
-    Ms = T%100; 
-    $("#myClick").text(M+"分"+S+"秒"+Ms);
-  }
-}
+		function myWatch(flug){
+			if (myButton==0){ 
+				Start=new Date();
+				myButton = 1;
+				myInterval=setInterval("myWatch(1)",1);
+			} else { 
+				if (flug==0){
+					myButton = 0;
+					clearInterval( myInterval ); 
+				}
+				Stop=new Date();
+				T = Stop.getTime() - Start.getTime();
+				H = Math.floor(T/(60*60*1000));
+				T = T-(H*60*60*1000);
+				M = Math.floor(T/(60*1000));
+				T = T-(M*60*1000);
+				S = Math.floor(T/1000); 
+				Ms = T%100; 
+				$("#myClick").text(M+"分"+S+"秒"+Ms);
+			}
+		}
 		</script>
 		<!--Page styles-->
 	</head>

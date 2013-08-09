@@ -1,25 +1,11 @@
 /*
- jQuery.sheet() The Web Based Spreadsheet
- $Id$
+ This Program was Developed based on jQuery.sheet() The Web Based Spreadsheet
  http://code.google.com/p/jquerysheet/
 
- Copyright (C) 2010 Robert Plummer
+ Copyright (C) 2013 @engineacher
+ 
  Dual licensed under the LGPL v2 and GPL v2 licenses.
  http://www.gnu.org/licenses/
- */
-
-/*
- Dimensions Info:
- When dealing with size, it seems that outerHeight is generally the most stable cross browser
- attribute to use for bar sizing.  We try to use this as much as possible.  But because col's
- don't have boarders, we subtract or add jS.s.boxModelCorrection for those browsers.
- tr/td column and row Index VS cell/column/row index
- DOM elements are all 0 based (tr/td/table)
- Spreadsheet elements are all 1 based (A1, A1:B4, TABLE2:A1, TABLE2:A1:B4)
- Column/Row/Cell
- DOCTYPE:
- It is recommended to use STRICT doc types on the viewing page when using sheet to ensure that the heights/widths of bars and sheet rows show up correctly
- Example of recommended doc type: <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
  */
 
 jQuery.fn.extend({
@@ -27,7 +13,6 @@ jQuery.fn.extend({
 		jQuery(this).each( function() {
 			var parent = jQuery(this);
 			var set = jQuery.extend({
-				urlGet: 			"sheets/developer.documentation.html", //local url, if you want to get a sheet from a url
 				editable: 			true, 							//bool, Makes the jSheetControls_formula & jSheetControls_fx appear
 				menu:				"",							//menu AS STRING!, overrides urlMenu
 				newColumnWidth: 	40, 							//int, the width of new columns or columns that have no width assigned
@@ -941,7 +926,7 @@ jS.cellSetActive(td,{col:0,row:0});
 					 */
 					switch (jS.cellLast.isEdit || forceCalc) {
 						case true:
-	console.log("Call cellEditDone");
+	// console.log("Call cellEditDone");
 							jS.obj.inPlaceEdit().remove();
 							var formula = jS.obj.formula();
 							//formula.unbind('keydown'); //remove any lingering events from inPlaceEdit
@@ -1487,7 +1472,7 @@ jS.cellSetActive(td,{col:0,row:0});
 				},
 				cell: {
 					setActive: function() {
-console.log("Call setActive");
+// console.log("Call setActive");
 						this.clearActive();
 						this.setHighlighted(
 						jS.cellLast.td
@@ -1611,7 +1596,7 @@ console.log("Call setActive");
 				//This finished up the edit of the last cell
 				jS.evt.cellEditDone();
 
-	console.log("Call cellEdit");
+	// console.log("Call cellEdit");
 				//jS.obj.formula().val(jS.colLast + jS.rowLast);
 								
 				jS.followMe(td);
@@ -1921,14 +1906,13 @@ console.log("Call setActive");
 						}
 					};
 					if (!o) {
-						jQuery('<div />').load(s.urlGet, function() {
-							var sheets = jQuery(this).find('table');
-							sheets.each( function(i) {
-								jS.controlFactory.sheetUI(jQuery(this), i, function() {
-									fnAfter(i, sheets.length);
-								}, true);
-							});
+						var sheets = jQuery('<div />').append("<TABLE><TBODY><TR><TD></TD></TR></TBODY></TABLE>").find('table');
+						sheets.each( function(i) {
+							jS.controlFactory.sheetUI(jQuery(this), i, function() {
+								fnAfter(i, sheets.length);
+							}, true);
 						});
+
 					} else {
 						var sheets = jQuery('<div />').html(o).children('table');
 						sheets.show().each( function(i) {

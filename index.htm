@@ -4,98 +4,16 @@
 <head>
     <title>100マス計算！</title>
     <meta charset="UTF-8">
-    <link href="CSS/jquery.sheet.css" rel="stylesheet" type="text/css">
-    <link href="CSS/jquery-ui.css" rel="stylesheet" type="text/css">
-    <link href="favicon.ico" rel="shortcut icon" type="image/x-icon">
-    <link href="favicon.ico" rel="icon" type="image/vnd.microsoft.icon">
-    <script src="jquery-1.10.2.js" type="text/javascript"></script>
-    <script src="100m.js" type="text/javascript"></script>
-    <script src="jquery.blockUI.js" type="text/javascript"></script><!--/Optional-->
-
-    <script type="text/javascript">
-            
-        $( function() {
-            var misscount = 0;
-            var nowmiss = 0;
-            var oldmiss = 0;
-            
-            $.blockUI({message: $("#loginForm") });
-            $("#okbutton").click(function(e){           
-                $.blockUI({message: $('<img src="start.gif" />') });
-
-                setTimeout(function() { 
-                    $.unblockUI({ 
-                        onUnblock: function(){ 
-                            Start=new Date();
-                            $('#jQuerySheet0').sheet({}); //ここでシートの生成。詳細は100m.jsへ。
-                            $('#YourName').text($('#InputName').val()+'さん');
-                            myButton = 0;
-                            myWatch(0); //タイマーセット
-                                                                        
-                            $('#jSheetControls_formula_0').blur(function (e) { //正解数をカウントする関数を生成
-                                    nowmiss = $('.incorrect').length;
-                                    if(nowmiss > oldmiss){
-                                        misscount++;
-                                    }
-                                    oldmiss = nowmiss;
-                                    
-                                    $('#debug1').text(misscount);
-                                    if($('.correct').length == $('#jSheetBarTop_0_0 *').length * $('#jSheetBarLeft_0_0 *').length){
-                                        alert("Clear time is"+$("#doTime").text());
-                                        clearInterval( myInterval ); 
-                                    }
-                            });
-                        } 
-                    }); 
-
-                }, 4000); 
-            });
-        });
-        
-        function onNameEnter(e){
-            if (!e) var e = window.event;
-            if(e.keyCode == 13){
-                $('#okbutton').trigger("click");                
-            }
-        }
-        
-        function myWatch(flug){
-            if (myButton==0){ 
-                Start=new Date();
-                myButton = 1;
-                myInterval=setInterval("myWatch(1)",1);
-            } else { 
-                if (flug==0){
-                    myButton = 0;
-                    clearInterval( myInterval ); 
-                }
-                Stop=new Date();
-                T = Stop.getTime() - Start.getTime();
-                H = Math.floor(T/(60*60*1000));
-                T = T-(H*60*60*1000);
-                M = Math.floor(T/(60*1000));
-                T = T-(M*60*1000);
-                S = Math.floor(T/1000); 
-                Ms = T%100; 
-                $("#doTime").text(M+"分"+S+"秒"+Ms);
-            }
-        }
-    </script><!--Page styles-->
-</head>
+    </head>
 
 <body>
-    <div id="YourName" style="width=200px"></div>
-    <div class="jQuerySheet" id="jQuerySheet0"></div>
-    <div id="debug1"></div>
-    <div id="debug2"></div>
-    <div id="debug3"></div>
+<h1>計算種別を選んでね！</h1>
+<a href="100math.htm?row=5&col=5&calcop=+"><img src="images/sum55.png"></a>
+<a href="100math.htm?row=10&col=10&calcop=+"><img src="images/sum1010.png"></a>
+<br>
+<a href="100math.htm?row=5&col=5&calcop=*"><img src="images/mul55.png"></a>
+<a href="100math.htm?row=10&col=10&calcop=*"><img src="images/mul1010.png"></a>
 
-    <div id="loginForm" style="display:none">
-        <p><label>名前を入れてください:</label><input id="InputName" name="demo1"
-        onkeypress="return onNameEnter(event);" type="text"></p>
 
-        <p><button id="okbutton" type="submit">OK</button></p>
-    </div>
-    <div id="doTime" style="display: none"></div>
 </body>
 </html>

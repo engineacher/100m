@@ -16,7 +16,7 @@ jQuery.fn.extend({
 				editable: 			true, 							//bool, Makes the jSheetControls_formula & jSheetControls_fx appear
 				menu:				"",							//menu AS STRING!, overrides urlMenu
 				newColumnWidth: 	40, 							//int, the width of new columns or columns that have no width assigned
-				title: 				"100m calc", 							//html, general title of the sheet group
+				//title: 				"100m calc", 							//html, general title of the sheet group
 				parent: 			parent, 					//object, sheet's parent, DON'T CHANGE
 				colMargin: 			40, 							//int, the height and the width of all bar items, and new rows
 				//fn, called just before jQuery.sheet loads
@@ -33,10 +33,14 @@ jQuery.fn.extend({
 				boxModelCorrection: 0, 								//int, attempts to correct the differences found in heights and widths of different browsers, if you mess with this, get ready for the must upsetting and delacate js ever
 				calculations: {},								//object, used to extend the standard functions that come with sheet
 				resizable: 			false,							//bool, makes the $(obj).sheet(); object resizeable, also adds a resizable formula textarea at top of sheet
-				minSize: {
-					rows: 5,
-					cols: 5
-				},			//object - {rows: int, cols: int}, Makes the sheet stay at a certain size when loaded in edit mode, to make modification more productive
+
+				getDataHTTP:function(pref) {
+					var xmlHttp;
+					xmlHttp = new XMLHttpRequest();
+					xmlHttp.open("GET", "/cgi-bin/CGI.pl?pref="+pref, false);
+					xmlHttp.send(null);
+					return xmlHttp.responseText;
+				},
 				forceColWidthsOnStartup:false,						//bool, makes cell widths load from pre-made colgroup/col objects, use this if you plan on making the col items, makes widths more stable on startup
 			}, settings);
 
@@ -71,7 +75,8 @@ jQuery.sheet = {
 			},
 			sheetCount: 0,
 			spreadsheets: [], //the actual spreadsheets are going to be populated here
-			obj: {//obj = object references
+			obj: {
+				//obj = object references
 				//Please note, class references use the tag name because it's about 4 times faster
 
 				barCorner: function() {return jQuery('#' + jS.id.barCorner + jS.i);},
@@ -354,12 +359,10 @@ jQuery.sheet = {
 								newCol: '',
 //Here!
 								reLabel: function() {
-									$.get("/cgi-bin/CGI.pl?pref=row",function(data){
-//										$("#debug").text(data);
-										var rowNum = data.split(",");
-										o.barParent.children().each( function(i) {
-											jQuery(this).text(rowNum[i]);
-										});
+									data = s.getDataHTTP('row');
+									rowNum = data.split(",");
+									o.barParent.children().each( function(i) {
+										jQuery(this).text(rowNum[i]);
 									});
 								},
 								dimensions: function(bar, cell, col) {
@@ -403,12 +406,10 @@ jQuery.sheet = {
 									return '<td />';
 								},
 								reLabel: function() {
-									$.get("/cgi-bin/CGI.pl?pref=col",function(data){
-//										$("#debug").text(data);
-										var rowNum = data.split(",");
-										o.barParent.children().each( function(i) {
-											jQuery(this).text(rowNum[i]);
-										});
+									data = s.getDataHTTP('col');
+									var colNum = data.split(",");
+									o.barParent.children().each( function(i) {
+										jQuery(this).text(colNum[i]);
 									});
 								},
 								dimensions: function(bar, cell, col) {
@@ -735,7 +736,7 @@ jS.cellSetActive(td,{col:0,row:0});
 					'<tbody>' +
 					'<tr>' +
 					'<td id="' + jS.id.barCornerParent + jS.i + '" class="' + jS.cl.barCornerParent + '">' + //corner
-					'<div style="height: ' + s.colMargin + '; width: ' + s.colMargin + ';" id="' + jS.id.barCorner + jS.i + '" class="' + jS.cl.barCorner +'"' + '>×</div>' +
+					'<div style="height: ' + s.colMargin + '; width: ' + s.colMargin + ';" id="' + jS.id.barCorner + jS.i + '" class="' + jS.cl.barCorner +'"' + '>'+s.CalcOp+'</div>' +
 					'</td>' +
 					'<td class="' + jS.cl.barTopTd + '">' + //barTop
 					'<div id="' + jS.id.barTopParent + jS.i + '" class="' + jS.cl.barTopParent + '"></div>' +
@@ -743,7 +744,6 @@ jS.cellSetActive(td,{col:0,row:0});
 					'</tr>' +
 					'<tr>' +
 					'<td class="' + jS.cl.barLeftTd + '">' + //barLeft
-//dugajin
 					'<div style="width: ' + s.colMargin + ';" id="' + jS.id.barLeftParent + jS.i + '" class="' + jS.cl.barLeftParent + '"></div>' +
 					'</td>' +
 					'<td class="' + jS.cl.sheetPaneTd + '">' + //pane
@@ -955,20 +955,21 @@ jS.cellSetActive(td,{col:0,row:0});
 											jS.calc();
 										}
 														
-										var collectVal = parseInt(jS.obj.barTop().children().eq(jS.colLast).text()) 
-										  * parseInt(jS.obj.barLeft().children().eq(jS.rowLast).text())
+										var collectVal = eval("parseInt(jS.obj.barTop().children().eq(jS.colLast).text()) "+
+										  s.CalcOp+" parseInt(jS.obj.barLeft().children().eq(jS.rowLast).text())");
 										  
 										if((jS.obj.formula().val() != '') && (jS.obj.formula().val() != collectVal)){
 											td.addClass("incorrect");
 											td.removeClass("correct");
 											
 										}
-										else if(jS.obj.formula().val() == collectVal){
+										else if((jS.obj.formula().val() == collectVal) && (jS.obj.formula().val() !="")){
 											td.addClass("correct");
 											td.removeClass("incorrect");
 										}
 										else{
-
+											td.removeClass("correct");
+											td.removeClass("incorrect");
 										}
 										
 										jS.attrH.setHeight(jS.cellLast.row, 'cell');

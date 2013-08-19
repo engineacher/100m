@@ -26,9 +26,9 @@
             
             $.blockUI({message: $("#loginForm") });
             $("#okbutton").click(function(e){           
-                $.blockUI({message: $('<img src="start.gif" />') });
-
-                setTimeout(function() { 
+                // $.blockUI({message: $('<img src="start.gif" />') });
+// 
+                // setTimeout(function() { 
                     $.unblockUI({ 
                         onUnblock: function(){ 
                             Start=new Date();
@@ -39,26 +39,26 @@
 									cols: cols,
 								},	
 							}); //ここでシートの生成。詳細は100m.jsへ。
-                            $('#YourName').text($('#InputName').val()+'さん');
+                            //$('#YourName').text($('#InputName').val()+'さん');
                             myButton = 0;
                             myWatch(0); //タイマーセット
                                                                         
                             $('#jSheetControls_formula_0').blur(function (e) { //正解数をカウントする関数を生成
-                                    nowmiss = $('.incorrect').length;
-                                    if(nowmiss > oldmiss){
-                                        misscount++;
-                                    }
-                                    oldmiss = nowmiss;
-                                    
-                                    $('#debug1').text(misscount);
-                                    if($('.correct').length == $('#jSheetBarTop_0_0 *').length * $('#jSheetBarLeft_0_0 *').length){
-                                        alert("Clear time is"+$("#doTime").text());
-                                        clearInterval( myInterval ); 
-                                    }
+	                            nowmiss = $('.incorrect').length;
+	                            if(nowmiss > oldmiss){
+	                                misscount++;
+	                            }
+	                            oldmiss = nowmiss;
+	                            $('#debug1').text(misscount);
+	                            //終わり
+	                            if($('.correct').length == rows * cols){
+	                                myWatch(0); 
+                                	finishAll("finish!");
+	                            }
                             });
                         } 
                     }); 
-                }, 4000); 
+                // }, 4000); 
             });
 
         });
@@ -74,23 +74,50 @@
             if (myButton==0){ 
                 Start=new Date();
                 myButton = 1;
-                myInterval=setInterval("myWatch(1)",1);
+                timeout = 180000;
+                myInterval=setInterval("myWatch(1)",10);
+                timeColorChange = setInterval("timeColor(timeout)",1000);
+                myTimeout = setTimeout("calcTimeup()",timeout);
             } else { 
                 if (flug==0){
                     myButton = 0;
                     clearInterval( myInterval ); 
+                    clearInterval( timeColorChange ); 
+                    clearInterval( myTimeout ); 
                 }
                 Stop=new Date();
                 T = Stop.getTime() - Start.getTime();
+                Sec=Math.floor(T/1000);
                 H = Math.floor(T/(60*60*1000));
                 T = T-(H*60*60*1000);
                 M = Math.floor(T/(60*1000));
                 T = T-(M*60*1000);
                 S = Math.floor(T/1000); 
-                Ms = T%100; 
+                Ms = Math.floor(T%1000/10); 
                 $("#doTime").text(M+"分"+S+"秒"+Ms);
+                $("#doSec").text(Sec);
             }
         }
+        function calcTimeup() {
+        	myWatch(0);
+        	finishAll("timeup!");
+        }
+        function timeColor(timeout){
+        	//終了30秒前,10秒前に色を変える
+    		if($("#doSec").text() >= (timeout-10000)/1000 ){ 
+    			$("#doTime").css("color","red");
+    		}else if($("#doSec").text() >= (timeout-30000)/1000 ){ 
+    			$("#doTime").css("color","yellow");
+    		}
+        }
+        
+        function finishAll(titleStr){
+			$("#yourTime").text($("#doTime").text());
+			$("#finishTitle").text(titleStr);
+			
+        	$.blockUI({message: $("#finishDialog") });
+        }
+        //getメソッドの引数を解析します。
 		function getRequest(){
 		  if(location.search.length > 1) {
 		    var get = new Object();
@@ -108,19 +135,27 @@
 </head>
 
 <body>
-    <div id="YourName" style="width=200px"></div>
+    <div id="YourName"></div>
+    <h2>経過時間：<span id="doTime"></span></h2>
     <div class="jQuerySheet" id="jQuerySheet0"></div>
     <div id="debug"></div>
     <div id="debug2"></div>
     <div id="debug3"></div>
+	<div id="doSec" style="display: none"></div>
 
     <div id="loginForm" style="display:none">
-    	
         <p><label>名前を入れてください:</label><input id="InputName" name="demo1"
         onkeypress="return onNameEnter(event);" type="text"></p>
-
         <p><button id="okbutton" type="submit">OK</button></p>
     </div>
-    <div id="doTime" style="display: none"></div>
+    
+    <div id="finishDialog" style="display: none">
+    	<h2><span id=finishTitle></span></h2>
+    	<p>クリアタイム: <span id="yourTime"></span></p>
+    	<p>スコア: <span id="yourScore"></span></p>
+    	<input type="button" onclick="location.reload()" value="もう一度！">
+    	<input type="button" onclick="window.open('index.htm','_self')" value="トップへ戻る">
+    </div>
+    
 </body>
 </html>

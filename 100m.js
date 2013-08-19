@@ -70,8 +70,8 @@ jQuery.sheet = {
 			i: 0,
 			I: I,
 			maxsize: {
-				maxwidth: (s.minSize.cols + 1) * 40 + 2,
-				maxheight: (s.minSize.rows + 1) * 40 + 2
+				maxwidth: (parseInt(s.minSize.cols) + 1) * 40 + 2,
+				maxheight: (parseInt(s.minSize.rows) + 1) * 40 + 2
 			},
 			sheetCount: 0,
 			spreadsheets: [], //the actual spreadsheets are going to be populated here
@@ -586,7 +586,6 @@ jQuery.sheet = {
 
 					var header = jQuery('<div id="' + jS.id.controls + '" class="' + jS.cl.controls + '"></div>');
 
-					//var firstRow = jQuery('<table cellpadding="0" cellspacing="0" border="0"><tr /></table>').prependTo(header);
 					var firstRowTr = jQuery('<tr />');
 
 					if (s.title) {
@@ -596,12 +595,9 @@ jQuery.sheet = {
 						} else {
 							title = s.title;
 						}
-						//firstRowTr.append(jQuery('<td id="' + jS.id.title + '" class="' + jS.cl.title + '" />').html(title));
 					}
 
 					if (jS.isSheetEditable()) {
-						//Sheet Menu Control
-						//Edit box menu
 						var secondRow = jQuery(
 						'<table cellpadding="0" cellspacing="0" border="0px">' +
 							'<tr>' +
@@ -773,15 +769,25 @@ jS.cellSetActive(td,{col:0,row:0});
 					var style = td.attr('style');
 					var w = td.width();
 					var h = td.height();
-					var textarea = jQuery('<input  maxlength="2" id="' + jS.id.inPlaceEdit + '" class="' + jS.cl.inPlaceEdit + ' ' + jS.cl.uiInPlaceEdit + '"  style="text-align: center;font-size: 1em; " WRAP="hard"/>')
+					var textarea = jQuery('<input maxlength="2" id="' + jS.id.inPlaceEdit + '" class="' + jS.cl.inPlaceEdit + ' ' + jS.cl.uiInPlaceEdit + '"  style="text-align: center;font-size: 1em;ime-mode:disabled;" WRAP="hard"/>')
 
 					//var textarea = jQuery('<textarea id="' + jS.id.inPlaceEdit + '" class="' + jS.cl.inPlaceEdit + ' ' + jS.cl.uiInPlaceEdit + '"   WRAP="hard"/>')
 					.css('left', offset.left)
 					.css('top', offset.top)
-					// .width(w)
-					// .height(h)
 					.keydown(jS.evt.inPlaceEditOnKeyDown)
 					.keyup( function() {
+						// console.log(textarea.val());
+						//全角数字を半角に変換する
+						var char1 = new Array("１","２","３","４","５","６","７","８","９","０");
+						var char2 = new Array(1,2,3,4,5,6,7,8,9,0);
+						var count;
+						var data = textarea.val();
+						while(data.match(/[０-９]/)){
+							for(count = 0; count < char1.length; count++){
+								data = data.replace(char1[count], char2[count]);
+							}
+						textarea.val(data.substring(0,2));	//先頭から2文字を切り出して入れる
+						}
 						formula.val(textarea.val());
 					})
 					.change( function() {
@@ -791,6 +797,8 @@ jS.cellSetActive(td,{col:0,row:0});
 						jS.setNav(false);
 					})
 					.focusout( function() {
+						// var b = "０１２３４５６７８９".indexOf(textarea.val());
+						// (b !== -1)? b:textarea.val();
 						jS.setNav(true);
 					})
 					.blur( function() {
